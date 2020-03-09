@@ -44,5 +44,4 @@ class MetaService:
     def getAllEntriesPastDate(self, date):
         results = self.model.getAllEntriesPastDate(date)        
         entries = self.loadResults(results)
-        print(entries)
         return entries
