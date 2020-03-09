@@ -19,7 +19,7 @@ def jsonifyEachEntry(data):
                 jsonEntries[arch] = [str(jsonEntry)]
     return jsonEntries
 
-@app.route("/meta", methods=["GET"])
+@app.route("/meta/", methods=["GET"])
 def getMeta():
     data = MetaService().getAllEntries()
     jsonData = jsonifyEachEntry(data) 

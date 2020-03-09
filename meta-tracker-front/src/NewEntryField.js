@@ -2,15 +2,17 @@ import React, { useState } from 'react';
 
 const baseUrl = 'http://localhost:5000/meta/'
 
-const NewEntryField = () => {
+const NewEntryField = (props) => {
     const [entry, setEntry] = useState("");
 
     const handleSubmit = event => {
+        event.preventDefault();
         fetch(baseUrl + entry, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({})  
+            body: JSON.stringify({})
         });
+        props.fetchData();
         setEntry("");
     }
 

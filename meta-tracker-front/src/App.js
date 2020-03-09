@@ -3,7 +3,7 @@ import DataTable from './DataTable';
 import NewEntryField from './NewEntryField';
 import DateSelector from './DateSelector';
 
-const baseUrl = "http://localhost:5000/meta";
+const baseUrl = "http://localhost:5000/meta/";
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -35,7 +35,7 @@ const App = () => {
   return (
     <div>
       <DataTable data={data}/>
-      <NewEntryField/>
+      <NewEntryField fetchData={fetchData} />
       <DateSelector createRows={createRows} />
     </div>
   )
