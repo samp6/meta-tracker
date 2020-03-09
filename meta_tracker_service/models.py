@@ -31,10 +31,10 @@ class MetaModel:
 
     def getAllEntries(self):
         query = "SELECT * FROM meta"
-        results = self.conn.execute(query).fetchAll()
+        results = self.conn.execute(query).fetchall()
         return results
 
-    def getAllEntriesAfterDate(self, date):
+    def getAllEntriesPastDate(self, date):
         query = "SELECT * FROM meta WHERE date > " + str(date)
-        results = self.conn.execute(query).fetchAll()
+        results = self.conn.execute(query).fetchall()
         return results

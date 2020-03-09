@@ -1,10 +1,20 @@
 from models import MetaModel
+from json import JSONEncoder
+import json
 
 class Entry:
-    def __init__(self, arch, id, date):
+    def __init__(self, id, date, arch):
         self.arch = arch
         self.id = id
         self.date = date
+
+class EntryEncoder(JSONEncoder):
+    def default(self, object):
+        if isinstance(object, Entry):
+            return object.__dict__
+        else:
+            return json.JSONEncoder.default(self, object)
+
 
 class MetaService:
     def __init__(self):
@@ -16,22 +26,23 @@ class MetaService:
     def removeDeckEntry(self, id):
         self.model.removeEntry(id)
 
-    def getAllEntries(self):
-        results = self.model.getAllEntries()
-        entries = loadResults(results)
-        return entries
-
-    def getAllEntriesPastDate(self, date):
-        results = self.model.getAllEntriesPastDate(date)
-        entries = loadResults(results)
-        return entries
-
     def loadResults(self, results):
         entries = {}
         for result in results:
             entry = Entry(result[0], result[1], result[2])
-            if arch in entries:
-                entries[arch].push(entry)
+            if entry.arch in entries:
+                entries[entry.arch].append(entry)
             else:
-                entries[arch] = [entry]
+                entries[entry.arch] = [entry]
+        return entries
+
+    def getAllEntries(self):
+        results = self.model.getAllEntries()
+        entries = self.loadResults(results)
+        return entries
+
+    def getAllEntriesPastDate(self, date):
+        results = self.model.getAllEntriesPastDate(date)        
+        entries = self.loadResults(results)
+        print(entries)
         return entries

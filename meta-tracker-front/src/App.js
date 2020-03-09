@@ -1,26 +1,44 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import DataTable from './DataTable';
+import NewEntryField from './NewEntryField';
+import DateSelector from './DateSelector';
 
-function App() {
+const baseUrl = "http://localhost:5000/meta";
+
+const App = () => {
+  const [data, setData] = useState([]);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = () => {
+    fetch(baseUrl)
+        .then(response => response.json())
+        .then(responseJson => {
+            createRows(responseJson)
+        })
+  }
+
+  const createRows = (resJson) => {
+    let data = [];
+    var dataObject = eval(resJson);
+    for(var key in dataObject) {
+        data.push({
+            arch: key,
+            freq: dataObject[key].length
+        });
+    }
+    setData(data);
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <DataTable data={data}/>
+      <NewEntryField/>
+      <DateSelector createRows={createRows} />
     </div>
-  );
+  )
 }
 
 export default App;
