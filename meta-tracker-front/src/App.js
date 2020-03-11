@@ -2,15 +2,20 @@ import React, { useEffect, useState } from 'react';
 import DataTable from './DataTable';
 import NewEntryField from './NewEntryField';
 import DateSelector from './DateSelector';
+import ChronTable from './ChronTable';
 
 const baseUrl = "http://localhost:5000/meta/";
 
 const App = () => {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({
+    freqData: [],
+    allData: []
+  });
+  const [editing, setEditing]  = useState(false);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, {});
 
   const fetchData = () => {
     fetch(baseUrl)
@@ -21,21 +26,40 @@ const App = () => {
   }
 
   const createRows = (resJson) => {
-    let data = [];
+    let newData = {
+      freqData: [],
+      allData: []
+    };
     var dataObject = eval(resJson);
     for(var key in dataObject) {
-        data.push({
+        newData.freqData.push({
             arch: key,
-            freq: dataObject[key].length
+            freq: dataObject[key].length,
         });
+        dataObject[key].forEach(entry => {
+          var entryObject = JSON.parse(entry);
+          newData.allData.push(entryObject);
+        });
+        console.log(newData);
     }
-    setData(data);
+    setData(newData);
+  }
+
+  var editBtnLabel = editing? "Save" : "Edit";
+  var editBtn = <button onClick={() => {setEditing(!editing)}} >{editBtnLabel}</button>;
+
+  var content;
+  if(editing) {
+    content = <ChronTable allData={data.allData} />;
+  } else {
+    content = <DataTable freqData={data.freqData}/>;
   }
 
   return (
     <div>
-      <DataTable data={data}/>
+      {content}
       <NewEntryField fetchData={fetchData} />
+      {editBtn}
       <DateSelector createRows={createRows} />
     </div>
   )

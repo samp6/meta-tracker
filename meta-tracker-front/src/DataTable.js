@@ -7,14 +7,12 @@ const columns = [
     { key: "arch", name: "Archetype" }
 ]
 
-let DataTable = ({data}) => {
-
-
+let DataTable = ({freqData}) => {
     return (
         <ReactDataGrid 
             columns={columns}
-            rowGetter={i => data[i]}
-            rowsCount={data.length}
+            rowGetter={i => freqData[i]}
+            rowsCount={freqData.length}
         />
     )
 }
