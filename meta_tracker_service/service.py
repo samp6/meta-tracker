@@ -26,6 +26,9 @@ class MetaService:
     def removeDeckEntry(self, id):
         self.model.removeEntry(id)
 
+    def editDeckEntry(self, id, new_text):
+        self.model.editEntry(id, new_text)
+
     def loadResults(self, results):
         entries = {}
         for result in results:

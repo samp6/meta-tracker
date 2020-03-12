@@ -40,7 +40,6 @@ const App = () => {
           var entryObject = JSON.parse(entry);
           newData.allData.push(entryObject);
         });
-        console.log(newData);
     }
     setData(newData);
   }
@@ -50,7 +49,7 @@ const App = () => {
 
   var content;
   if(editing) {
-    content = <ChronTable allData={data.allData} />;
+    content = <ChronTable allData={data.allData} fetchData={fetchData} />;
   } else {
     content = <DataTable freqData={data.freqData}/>;
   }

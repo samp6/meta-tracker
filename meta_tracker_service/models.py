@@ -25,7 +25,13 @@ class MetaModel:
         return self.conn.commit()
 
     def removeEntry(self, id):
-        query = "DELETE FROM meta WHERE id = " + str(id)
+        query = "DELETE FROM meta WHERE id = " + id
+        print(query)
+        self.conn.execute(query)
+        return self.conn.commit()
+
+    def editEntry(self, id, new_text):
+        query = "UPDATE meta SET arch = '" + str(new_text) + "' WHERE id = '" + str(id) + "'"
         self.conn.execute(query)
         return self.conn.commit()
 

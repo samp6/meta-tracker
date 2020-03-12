@@ -7,7 +7,7 @@ const NewEntryField = (props) => {
 
     const handleSubmit = event => {
         event.preventDefault();
-        fetch(baseUrl + entry, {
+        fetch(baseUrl + "create/" + entry, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({})

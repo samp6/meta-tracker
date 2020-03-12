@@ -34,13 +34,17 @@ def getMetaPostDate(date):
     return response
 
 
-@app.route("/meta/<arch>", methods=["POST"])
+@app.route("/meta/create/<arch>", methods=["POST"])
 def createEntry(arch):
     return jsonify(MetaService().createDeckEntry(arch))
 
-@app.route("/meta/<id>", methods=["POST"]) 
+@app.route("/meta/delete/<id>", methods=["POST"]) 
 def removeEntry(id):
     return jsonify(MetaService().removeDeckEntry(id))
+
+@app.route("/meta/edit/<id>/<new_text>", methods=["POST"])
+def editEntry(id, new_text):
+    return jsonify(MetaService().editDeckEntry(id, new_text))
 
 if __name__ == "__main__":
     Schema()
