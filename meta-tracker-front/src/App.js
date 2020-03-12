@@ -44,7 +44,7 @@ const App = () => {
     setData(newData);
   }
 
-  var editBtnLabel = editing? "Save" : "Edit";
+  var editBtnLabel = editing? "Normal View":  "Editor View";
   var editBtn = <button onClick={() => {setEditing(!editing)}} >{editBtnLabel}</button>;
 
   var content;
